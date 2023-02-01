@@ -3,7 +3,7 @@ import defaultImage from './assets/images/default.png';
 const CONFIG = {
   name: 'genznodes',
 
-  origin: 'https://genznodes.dev',
+  origin: 'https://spt-node.my.id',
   basePathname: '/',
   trailingSlash: false,
 
@@ -12,7 +12,7 @@ const CONFIG = {
     '🚀 Relayer and Staking Service Provider for Cosmos Ecosystem',
   defaultImage: defaultImage,
 
-  defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+  defaultTheme: 'system', // Values: "system" | "dark" | "dark" | "light:only" | "dark:only"
 
   language: 'en',
   textDirection: 'ltr',
