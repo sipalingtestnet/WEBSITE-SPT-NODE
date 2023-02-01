@@ -12,7 +12,7 @@ const CONFIG = {
     '🚀 Relayer and Staking Service Provider for Cosmos Ecosystem',
   defaultImage: defaultImage,
 
-  defaultTheme: 'dark', // Values: "system" | "dark" | "dark" | "light:only" | "dark:only"
+  defaultTheme: 'system', // Values: "system" | "dark" | "dark" | "light:only" | "dark:only"
 
   language: 'en',
   textDirection: 'ltr',
