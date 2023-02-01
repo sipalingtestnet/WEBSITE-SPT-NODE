@@ -1,13 +1,13 @@
 import defaultImage from './assets/images/default.png';
 
 const CONFIG = {
-  name: 'genznodes',
+  name: 'SPT-NODE',
 
   origin: 'https://spt-node.my.id',
   basePathname: '/',
   trailingSlash: false,
 
-  title: 'genznodes - staking service provider',
+  title: 'SPT-NODE - staking service provider',
   description:
     '🚀 Relayer and Staking Service Provider for Cosmos Ecosystem',
   defaultImage: defaultImage,
