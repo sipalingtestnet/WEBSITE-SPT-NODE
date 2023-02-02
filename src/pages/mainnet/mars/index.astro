@@ -16,6 +16,10 @@ const meta = {
 };
 
 const items = [
+  {
+		title: 'Node installation',
+		Link: 'https://spt-node.my.id/mainnet/mars/installation',
+	},
 	{
 		title: 'Addrbook',
 		Link: 'https://spt-node.my.id/mainnet/mars/addrbook',
@@ -36,11 +40,7 @@ const items = [
 		title: 'gRPC',
 		Link: 'https://spt-node.my.id/mainnet/mars/grpc',
 	},
-	{
-		title: 'Node installation',
-		Link: 'https://spt-node.my.id/mainnet/mars/installation',
-	},
-	{
+  {
 		title: 'Peers',
 		Link: 'https://spt-node.my.id/mainnet/mars/peers',
 	},
@@ -65,9 +65,11 @@ const items = [
 			<div class="py-10 md:py-20">
 				<div class="text-center pb-5 md:pb-5 max-w-5xl mx-auto">
 					<Icon name={icon} class="w-20 h-20 inline-block align-text-bottom" />           
-					<h1 class="text-5xl md:text-[3.50rem] font-bold leading-tighter tracking-tighter mb-4 font-heading">
-						Service {name}
-					</h1>
+					<h1 class="header-1">Mars Protocol</h1>
+          <div class="space-y-4"><p><span class="font-semibold">Network Type</span>: Mainnet </p><p><span class="font-semibold">Chain ID</span>: mars-1 </p>
+          <p><span class="font-semibold">Current Node Version</span>: v1.0.0 </p><p> The galaxy's most powerful credit protocol. </p>
+          <p> Mars Protocol is a Tendermint-based chain. You can typically use Keplr or Ping to access your wallet and stake with Polkachu. The staking link is provided below. 
+            </p><div class="text-center">
 					<a
 							class="btn bg-violet-700 w-1/4 items-center hover:bg-violet-800 text-white font-bold md:pb-4"
 							href={stake}>Stake with Spt-Node</a>
