@@ -1,9 +1,9 @@
 ---
 layout: '~/layouts/MarkdownLayout.astro'
 title: Snapshot
-icon: mars
-chain: mars-1
-version: v1.0.0
+icon: bitcanna
+chain: bitcanna-1
+version: v1.5.3
 ---
 - update 24/1
 
@@ -16,19 +16,19 @@ sudo apt install lz4 -y
 
 ### reset chain data
 ```
-sudo systemctl stop marsd
-marsd tendermint unsafe-reset-all --home $HOME/.mars --keep-addr-book
+sudo systemctl stop bcnad
+bcnad tendermint unsafe-reset-all --home $HOME/.bcna --keep-addr-book
 ```
 
 ### download data
 
 ```
-curl -o - -L https://snap.genznodes.dev/snapshot/mars/mars-1-data.tar.lz4 | lz4 -c -d - | tar -x -C $HOME/.mars
+curl -o - -L https://snapshots.bitcanna.spt-node.my.id/bitcanna/bitcanna-snapshot-20230205.tar.lz4 | lz4 -c -d - | tar -x -C $HOME/.mars
 ```
 
 ### start node
 
 ```
-sudo systemctl restart marsd
-sudo journalctl -fu marsd -o cat
+sudo systemctl restart bcnad
+sudo journalctl -fu bcnad -o cat
 ```
