@@ -1,4 +1,4 @@
-import defaultImage from './assets/images/default.png';
+import defaultImage from './assets/images/Asset 9-1.jpg';
 
 const CONFIG = {
   name: 'SPT-NODE',
@@ -9,7 +9,7 @@ const CONFIG = {
 
   title: 'SPT-NODE - staking service provider',
   description:
-    '🚀 Relayer and Staking Service Provider for Cosmos Ecosystem',
+    '🚀 Learn and Staking Service Provider for Cosmos Ecosystem',
   defaultImage: defaultImage,
 
   defaultTheme: 'light', // Values: "system" | "dark" | "dark" | "light:only" | "dark:only"
