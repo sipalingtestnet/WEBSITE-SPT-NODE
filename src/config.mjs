@@ -9,7 +9,7 @@ const CONFIG = {
 
   title: 'SPT-NODE - staking service provider',
   description:
-    '🚀 Learn and Staking Service Provider for Cosmos Ecosystem',
+    '🚀Learn and Staking Service Provider for Cosmos Ecosystem',
   defaultImage: defaultImage,
 
   defaultTheme: 'light', // Values: "system" | "dark" | "dark" | "light:only" | "dark:only"
