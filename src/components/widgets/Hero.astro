@@ -27,14 +27,14 @@ import { Picture } from '@astrojs/image/components'
 				<div class="relative m-auto max-w-4xl">
 					<Picture
 						src={import('~/assets/images/defaultImage.jpg')}
-						class="mx-auto rounded-md w-full"
-						widths={[16104, 16104,  8641,  8641]}
-						sizes="(max-width: 16104px) 8641px, (max-width: 16104px) 16104px, 8641px" 
-						alt="Hero Imagae"
+			class="mx-auto rounded-md w-full"
+						widths={[400, 768, 1480, 3124]}
+						sizes="(max-width: 3124px) 886px, (max-width: 1479px) 768px, 1480px"
+						alt="Hero Image"
 						aspectRatio={3124/886}
 						loading="eager"
-						width={16104}
-						height={8641}
+						width={3124}
+						height={886}
 					/>
        
 			
