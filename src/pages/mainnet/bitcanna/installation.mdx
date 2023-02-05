@@ -1,11 +1,11 @@
 ---
 layout: '~/layouts/MarkdownLayout.astro'
 title: Installation Node
-icon: mars
-chain: mars-1
-version: 1.0.0
+icon: bitcanna
+chain: bitcanna-1
+version: v1.5.3
 ---
-## Hardware Requirements
+### Hardware Requirements
 
 A production-ready server typically requires:
 
@@ -17,7 +17,7 @@ A production-ready server typically requires:
 
 - Linux operating system. 
 
-# setting vars
+### setting vars
 
 `<YOUR_MONIKER>` change with your moniker / name of your validator in explorer
 
@@ -25,24 +25,13 @@ A production-ready server typically requires:
 NODENAME=<YOUR_MONIKER>
 ```
 
-save and import variable
-
-```
-echo "export NODENAME=$NODENAME" >> $HOME/.bash_profile
-if [ ! $WALLET ]; then
-	echo "export WALLET=wallet" >> $HOME/.bash_profile
-fi
-echo "export MARS_CHAIN_ID=mars-1" >> $HOME/.bash_profile
-source $HOME/.bash_profile
-```
-
-# Install and update dependencies
+###  Install and update dependencies
 
 ```
 sudo apt update && sudo apt upgrade -y && sudo apt install curl tar wget clang pkg-config libssl-dev jq build-essential bsdmainutils git make ncdu gcc git jq chrony liblz4-tool -y
 ```
 
-# Install Go
+### Install Go
 
 ```
 ver="1.19"
@@ -61,7 +50,7 @@ check golang
 go version
 ```
 
-# Install app
+###  Install app
 
 ```
 cd $HOME
@@ -72,20 +61,62 @@ git checkout v1.5.3
 make build
 ```
 
-# Set node configuration
+### Prepare binaries for Cosmovisor
+```
+mkdir -p $HOME/.bcna/cosmovisor/genesis/bin
+mv build/bcnad $HOME/.bcna/cosmovisor/genesis/bin/
+rm -rf build
+```
+
+### Create application symlinks
+```
+ln -s $HOME/.bcna/cosmovisor/genesis $HOME/.bcna/cosmovisor/current
+sudo ln -s $HOME/.bcna/cosmovisor/current/bin/bcnad /usr/local/bin/bcnad
+```
+
+# Download and install Cosmovisor
+```
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.4.0
+```
+
+# Create service
+```
+sudo tee /etc/systemd/system/bcnad.service > /dev/null << EOF
+[Unit]
+Description=bitcanna node service
+After=network-online.target
+
+[Service]
+User=$USER
+ExecStart=$(which cosmovisor) run start
+Restart=on-failure
+RestartSec=10
+LimitNOFILE=65535
+Environment="DAEMON_HOME=$HOME/.bcna"
+Environment="DAEMON_NAME=bcnad"
+Environment="UNSAFE_SKIP_BACKUP=true"
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable bcnad
+```
+
+### Set node configuration
 ```
 bcnad config chain-id bitcanna-1
 bcnad config keyring-backend file
 bcnad config node tcp://localhost:42657
 ```
 
-# init
+###  init
 
 ```
 bcnad init $MONIKER --chain-id bitcanna-1
 ```
 
-# get genesis and addrbook
+###  get genesis and addrbook
 
 - genesis
 
@@ -94,34 +125,42 @@ curl -Ls https://snapshots.kjnodes.com/bitcanna/genesis.json > $HOME/.bcna/confi
 curl -Ls https://snapshots.kjnodes.com/bitcanna/addrbook.json > $HOME/.bcna/config/addrbook.json
 ```
 
-## create service file and start node
-
-- create 
-
+####  Add seeds
 ```
-sudo tee /etc/systemd/system/marsd.service > /dev/null <<EOF
-[Unit]
-Description=marsd
-After=network-online.target
-
-[Service]
-User=$USER
-ExecStart=$(which marsd) start --home $HOME/.mars
-Restart=on-failure
-RestartSec=3
-LimitNOFILE=65535
-
-[Install]
-WantedBy=multi-user.target
-EOF
+sed -i -e "s|^seeds *=.*|seeds = \"400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@bitcanna.rpc.kjnodes.com:42659\"|" $HOME/.bcna/config/config.toml
 ```
 
+# Set minimum gas price
+```
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0ubcna\"|" $HOME/.bcna/config/app.toml
+```
+
+# Set pruning
+```
+sed -i \
+  -e 's|^pruning *=.*|pruning = "custom"|' \
+  -e 's|^pruning-keep-recent *=.*|pruning-keep-recent = "100"|' \
+  -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' \
+  -e 's|^pruning-interval *=.*|pruning-interval = "19"|' \
+  $HOME/.bcna/config/app.toml
+  ```
+  
+  ###  Set custom ports
+   ```
+sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:42658\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:42657\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:42060\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:42656\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":42660\"%" $HOME/.bcna/config/config.toml
+sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:42317\"%; s%^address = \":8080\"%address = \":42080\"%; s%^address = \"0.0.0.0:9090\"%address = \"0.0.0.0:42090\"%; s%^address = \"0.0.0.0:9091\"%address = \"0.0.0.0:42091\"%; s%^address = \"0.0.0.0:8545\"%address = \"0.0.0.0:42545\"%; s%^ws-address = \"0.0.0.0:8546\"%ws-address = \"0.0.0.0:42546\"%" $HOME/.bcna/config/app.toml
+ ```
+
+ ### Download latest chain snapshot
+  ```
+ curl -L https://snapshots.kjnodes.com/bitcanna/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.bcna
+[[ -f $HOME/.bcna/data/upgrade-info.json ]] && cp $HOME/.bcna/data/upgrade-info.json $HOME/.bcna/cosmovisor/genesis/upgrade-info.json
+ ```
+ 
+ 
 - start
 
 ```
-sudo systemctl daemon-reload
-sudo systemctl enable marsd
-sudo systemctl restart marsd
-sudo journalctl -fu marsd -o cat
+sudo systemctl start bcnad && sudo journalctl -u bcnad -f --no-hostname -o cat
 ```
 
