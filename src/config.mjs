@@ -1,4 +1,4 @@
-import defaultImage from './assets/images/Asset 9-1.jpg';
+import defaultImage from './assets/images/defaultImage.jpg';
 
 const CONFIG = {
   name: 'SPT-NODE',
