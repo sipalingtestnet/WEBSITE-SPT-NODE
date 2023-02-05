@@ -74,12 +74,12 @@ ln -s $HOME/.bcna/cosmovisor/genesis $HOME/.bcna/cosmovisor/current
 sudo ln -s $HOME/.bcna/cosmovisor/current/bin/bcnad /usr/local/bin/bcnad
 ```
 
-# Download and install Cosmovisor
+###  Download and install Cosmovisor
 ```
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.4.0
 ```
 
-# Create service
+###  Create service
 ```
 sudo tee /etc/systemd/system/bcnad.service > /dev/null << EOF
 [Unit]
@@ -110,15 +110,13 @@ bcnad config keyring-backend file
 bcnad config node tcp://localhost:42657
 ```
 
-###  init
+###  Init
 
 ```
 bcnad init $MONIKER --chain-id bitcanna-1
 ```
 
-###  get genesis and addrbook
-
-- genesis
+###  Get genesis and addrbook
 
 ```
 curl -Ls https://snapshots.kjnodes.com/bitcanna/genesis.json > $HOME/.bcna/config/genesis.json
@@ -130,12 +128,12 @@ curl -Ls https://snapshots.kjnodes.com/bitcanna/addrbook.json > $HOME/.bcna/conf
 sed -i -e "s|^seeds *=.*|seeds = \"400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@bitcanna.rpc.kjnodes.com:42659\"|" $HOME/.bcna/config/config.toml
 ```
 
-# Set minimum gas price
+#### Set minimum gas price
 ```
 sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0ubcna\"|" $HOME/.bcna/config/app.toml
 ```
 
-# Set pruning
+#### Set pruning
 ```
 sed -i \
   -e 's|^pruning *=.*|pruning = "custom"|' \
@@ -158,7 +156,7 @@ sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:42317\"
  ```
  
  
-- start
+####  Start
 
 ```
 sudo systemctl start bcnad && sudo journalctl -u bcnad -f --no-hostname -o cat
