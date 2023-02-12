@@ -73,12 +73,25 @@ const items = [
 					items.map(({ title, description, icon , Link }) => (
 			<div class="flex items-center transition border border-slate-600 flex-col hover:shadow-xl lg:flex lg:flex-row lg:items-left lg:py-3.5 lg:text-left md:flex-row md:py-3.5 md:text-left px-3 py-6 rounded-[10px] shadow-gray-200 shadow-md text-center xl:text-left">
 								<Icon name={icon} class="w-12 h-12" />
-								<div class="ml-4 text-xl font-bold">{title}</div>
+							
 							</div>
-							<p class="text-gray-500 dark:text-gray-400 text-md items-center font font-semibold">{description}</p>
+            
+            
+            <div class="flex flex-col">
+              <div>
+                <p class="font-mono text-xl btn-kuntul text-black">{title}<span class="flex h-[0.5rem] ml-1.5 relative w-[0.5rem]">
+                <span class="rounded-full absolute animate-ping bg-green-300 h-full inline-flex opacity-75 w-full">
+                 </span> <span class="rounded-full bg-green-400 h-[0.5rem] relative w-[0.5rem]">
+                  </span>
+                      </span>
+                      /p>
+                            </div>
+                        <div>
+            <div class="flex flex-col"><div><p class="font-mono text-xl btn-kuntul text-blac
+						
 							<div class="flex w-full sm:w-auto p-1">
 							<a
-								class="btn bg-primary-400 w-full hover:bg-blue-400"
+								class="btn-kuntul bg-primary-400 w-full hover:bg-blue-400"
 								href={Link}>Get In</a>
 							</div>
 						</div>
